@@ -1,4 +1,4 @@
-# Backup scripts for MySql applications
+# Backup scripts for Psql applications
 
 ## Prerequisites
 
