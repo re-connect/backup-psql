@@ -22,7 +22,7 @@ check_requirements () {
 
 get_credentials () {
   ENV_FILE=".env.local"
-  ENV_FILE_PATH="$PROJECT_PATH/current/$ENV_FILE"
+  ENV_FILE_PATH="$PROJECT_PATH/shared/$ENV_FILE"
   DATABASE_URL=$(grep "DATABASE_URL" $ENV_FILE_PATH)
 
   DB_USER=$(echo "$DATABASE_URL" | awk -F'[/:@]' '{print $4}')

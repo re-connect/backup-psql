@@ -15,16 +15,16 @@ if [ "$(sed -n 's/^APP_ENV=//p' "$ENV_FILE_PATH")" != "preprod" ]; then
     exit 1
 fi
 
-PROD_PROJECT_NAME=$(echo "$PROJECT_NAME" | tr -d '_pp')
+PROD_PROJECT_NAME=$(echo "$PROJECT_NAME" | sed 's/_pp$//')
 get_dump_folder "$PROD_PROJECT_NAME"
 
 echo "Loading dump to preprod database for $PROJECT_NAME";
 APP_DIRECTORY="$HOME/$PROJECT_NAME/current"
 cd $APP_DIRECTORY && php ./bin/console doctrine:database:drop --force --env=preprod -n && cd -
 cd $APP_DIRECTORY && php ./bin/console doctrine:database:create --env=preprod -n && cd -
-PGPASSWORD="$DB_PASSWORD" psql "$DB_NAME" -U "$DB_USER" -h localhost < $HOME/dump.sql
+PGPASSWORD="$DB_PASSWORD" psql "$DB_NAME" -U "$DB_USER" -h localhost < "$LAST_DUMP_PATH"
 cd $APP_DIRECTORY && php ./bin/console doctrine:migrations:migrate -n && cd -
 echo 'Dump copied';
 
-sh ./end_timestamp.sh
+end_timestamp
 exit
