@@ -1,5 +1,5 @@
 // Prod crontab
-0 0 * * * cd ~/backup-book && sh ./backup.sh mpp >> ~/logs/backup-db.log
+0 0 * * * cd ~/backup-psql && sh ./backup.sh mpp >> ~/logs/backup-db.log
 
 // Preprod crontab
-0 2 * * 0 cd ~/backup-book && sh ./load_preprod.sh mpp_pp >> ~/logs/load_preprod_dump.log
+0 1 * * 0 cd ~/backup-psql && sh ./load_preprod.sh mpp_pp >> ~/logs/load_preprod_dump.log
